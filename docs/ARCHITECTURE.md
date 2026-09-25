@@ -1,30 +1,131 @@
 # Architekturentwurf
 
-## Grundprinzip
+## Grundentscheidung
 
-Die Simulation soll von Anfang an möglichst klar von Darstellung und Benutzeroberfläche getrennt sein.
+OpenTower wird als **Hybrid aus Godot 4 und einem C#/.NET-Simulationskern** entwickelt.
 
-Das verhindert, dass tausende Agenten direkt als vollwertige Godot-Nodes simuliert werden müssen und erleichtert spätere Optimierungen.
+Godot ist nicht die Simulation selbst, sondern vor allem Host für:
 
-## Vorgeschlagene Schichten
+- Rendering
+- UI
+- Kamera
+- Input
+- Audio
+- Animation
+- Szenen und Editor-Tooling
 
-### 1. Simulation Core
+Die eigentliche Spielsimulation liegt soweit sinnvoll in einem **Godot-unabhängigen C#-Core**.
+
+Dadurch vermeiden wir, dass langfristig tausende Personen, Räume oder Aufzugszustände direkt an Godot-Nodes gekoppelt sind.
+
+## Zielarchitektur
+
+```text
+                OpenTower
+                    |
+       +------------+------------+
+       |                         |
+  Godot Presentation        OpenTower.Core
+       |                         |
+ Rendering                    Simulation Clock
+ UI                           Agents
+ Camera                       Building Model
+ Input                        Economy
+ Audio                        Transport
+ Animation                    Pathfinding
+       |                         |
+       +---- OpenTower.Godot ----+
+              Adapter Layer
+```
+
+## Projekte
+
+### OpenTower.Core
+
+C# Class Library ohne direkte Abhängigkeit von Godot.
 
 Verantwortlich für:
 
-- Spielzeit
-- Geld
-- globale Zustände
-- Agentenzustände
-- Raumzustände
-- Nachfrage
+- Simulationszeit
+- Agenten
+- Räume
+- Gebäude
+- Aufzüge
+- Warteschlangen
+- Wirtschaft
+- Zustandsmaschinen
 - Events
+- Savegame-Datenmodelle
+- langfristig Wegfindung
 
-Die Simulationslogik sollte möglichst unabhängig von Rendering und UI funktionieren.
+Vorteil: Dieser Teil kann mit normalen .NET-Tests getestet und bei Bedarf sogar ohne Godot ausgeführt werden.
 
-### 2. Building Model
+### OpenTower.Godot
 
-Datenmodell für:
+Godot-spezifische C#-Schicht.
+
+Verantwortlich für:
+
+- Übersetzung zwischen Core und Godot
+- Erzeugen / Pooling sichtbarer Sprites
+- Input-Aktionen
+- Bauwerkzeuge
+- UI-Bindings
+- Kamera
+- Darstellung von Debug-Informationen
+
+Diese Schicht soll möglichst wenig eigentliche Spiellogik enthalten.
+
+### OpenTower.Core.Tests
+
+Unit- und Simulationstests für den Core.
+
+Beispiele:
+
+- Aufzug nimmt maximal N Agenten auf
+- Agent verlässt Warteschlange korrekt
+- Büro erzeugt definierte Einnahmen
+- 10.000 Ticks liefern reproduzierbaren Zustand
+- Speichern / Laden erhält Simulationszustand
+
+## Simulation Core
+
+Die Simulation arbeitet mit Datenobjekten statt mit einem Godot-Node pro Objekt.
+
+Beispiel:
+
+```text
+Agent
+- Id
+- Position
+- CurrentFloor
+- Destination
+- State
+- WaitTime
+- Mood
+```
+
+Ein Agent kann damit existieren und simuliert werden, auch wenn er gerade nicht gerendert wird.
+
+## Agent Simulation
+
+Agenten verwenden zunächst eine einfache Zustandsmaschine:
+
+```text
+ENTER_BUILDING
+→ WALK_TO_ELEVATOR
+→ WAIT_FOR_ELEVATOR
+→ RIDE_ELEVATOR
+→ WALK_TO_DESTINATION
+→ WORK
+→ LEAVE
+```
+
+Später kann daraus ein flexibleres Task-/Needs-System werden.
+
+## Building Model
+
+Das Gebäudemodell verwaltet:
 
 - Grundstück
 - Etagen
@@ -44,29 +145,11 @@ Räume besitzen Daten wie:
 - Einnahmen
 - Betriebskosten
 
-### 3. Agent Simulation
+## Transport
 
-Agenten sollten zunächst einfache Zustandsmaschinen verwenden.
+Aufzüge sind ein separates Core-System.
 
-Beispiel:
-
-```text
-ENTER_BUILDING
-→ WALK_TO_ELEVATOR
-→ WAIT_FOR_ELEVATOR
-→ RIDE_ELEVATOR
-→ WALK_TO_DESTINATION
-→ WORK
-→ LEAVE
-```
-
-Später kann daraus ein flexibleres Task-/Needs-System werden.
-
-### 4. Transport
-
-Aufzüge sind ein eigenes Simulationssystem.
-
-Sie verwalten unter anderem:
+Sie verwalten:
 
 - Kabinen
 - Etagenstopps
@@ -75,31 +158,48 @@ Sie verwalten unter anderem:
 - Fahrzeiten
 - Ein-/Ausstieg
 - Warteschlangen
+- spätere Dispatching-Strategien
 
-Die Aufzugslogik sollte nicht direkt in Agenten implementiert werden.
+Agenten stellen Transportanforderungen; das Transportsystem löst sie.
 
-### 5. Rendering
+## Rendering
 
-Rendering liest den Simulationszustand und stellt ihn dar.
+Rendering liest den Core-Zustand und stellt ihn dar.
 
 Wichtig:
 
-- Simulation darf ohne sichtbare Nodes weiterlaufen können.
-- Nicht jede Person muss permanent einen eigenen komplexen Node besitzen.
-- Sichtbare Agenten können aus einem Pool erzeugt werden.
+- Der Core darf ohne sichtbare Nodes laufen.
+- Nicht jede Person bekommt permanent einen komplexen Node.
+- Sichtbare Agenten werden gepoolt.
+- Rendering-Framerate und Simulationsrate sind getrennt.
 
-### 6. UI
+## UI
 
-UI verändert den Simulationszustand nur über definierte Aktionen, zum Beispiel:
+UI verändert die Simulation nur über definierte Commands bzw. Services, zum Beispiel:
 
 ```text
-build_room(type, position)
-build_floor(level)
-build_elevator(column, min_floor, max_floor)
-demolish(object_id)
+BuildRoom(type, position)
+BuildFloor(level)
+BuildElevator(column, minFloor, maxFloor)
+Demolish(objectId)
 ```
 
-So bleiben UI und Simulation entkoppelt.
+UI soll keine internen Core-Daten direkt manipulieren.
+
+## Tick-System
+
+Simulation und Rendering laufen getrennt.
+
+Beispiel:
+
+- Rendering: je nach Framerate
+- Simulation Core: feste Tickrate
+- Agentenentscheidungen: nach Bedarf / in Intervallen
+- Aufzugsteuerung: feste oder ereignisgesteuerte Intervalle
+- Wirtschaft: deutlich seltener
+- Langzeitstatistik: sehr selten
+
+Das ermöglicht reproduzierbare Simulationen und verhindert, dass das Spielverhalten von 60 oder 144 FPS abhängt.
 
 ## Datengetriebenes Design
 
@@ -116,47 +216,51 @@ Beispiel:
 }
 ```
 
-Das erleichtert:
-
-- Balancing
-- Mods
-- Tests
-- spätere Erweiterungen
-
 ## Raster
 
-Für den ersten Prototypen empfiehlt sich ein diskretes 2D-Raster:
+Für den ersten Prototypen verwenden wir ein diskretes 2D-Raster:
 
 - X = horizontale Gebäudeposition
 - Y = Stockwerk
 
 Jede Einrichtung belegt eine oder mehrere Rasterzellen.
 
-## Tick-System
+## Performance-Ziel
 
-Nicht jedes System muss jedes gerenderte Frame aktualisiert werden.
+Der erste Prototyp muss noch keine 10.000 sichtbaren Figuren darstellen.
 
-Geplant:
+Der Core soll aber von Anfang an so strukturiert werden, dass große Simulationsmengen möglich bleiben.
 
-- Rendering: pro Frame
-- Agentenbewegung: häufig
-- Aufzugsteuerung: regelmäßig
-- Wirtschaft: seltener
-- Langzeitstatistik: deutlich seltener
+Zwischenziele:
 
-Dadurch bleibt die Simulation auch bei vielen Personen performant.
+- einige hundert Agenten im ersten Gameplay-Prototyp
+- 1.000+ Agenten als früher Performance-Test
+- später 5.000–10.000 simulierte Agenten untersuchen
 
-## Erste technische Zielgröße
+Optimiert wird anhand von Messungen, nicht vorsorglich durch unnötig komplizierten Code.
 
-Der erste Prototyp soll problemlos mindestens einige hundert simulierte Personen verwalten können.
+## Warum nicht alles in Godot-Nodes?
 
-Später wird optimiert, bevor die Zielgröße auf mehrere tausend Agenten erhöht wird.
+Ein Node pro sichtbarem Objekt ist für Darstellung völlig in Ordnung.
+
+Für eine große Managementsimulation entstehen aber unnötige Abhängigkeiten, wenn jeder logische Agent, jede Warteschlangenposition und jeder Wirtschaftszustand direkt Teil des Szenenbaums wird.
+
+Der getrennte C#-Core bringt:
+
+- bessere Testbarkeit
+- klare Zuständigkeiten
+- einfacheres Profiling
+- geringere Engine-Kopplung
+- bessere Möglichkeiten für große Agentenzahlen
+- einfachere Headless-Simulation
+- später leichter austauschbare Darstellung
 
 ## Noch offene Entscheidungen
 
 - genaue Rastergröße
 - Pixel-Art vs. höher aufgelöste 2D-Grafik
-- Navigation: eigenes Grid-Pathfinding oder Godot-Navigation
+- eigenes Grid-Pathfinding vs. hybride Navigation
 - Savegame-Format
-- Ressourcenformat: JSON vs. Godot Resources
-- Event-/Signals-Architektur
+- JSON vs. C#-Definitionen vs. Godot Resources für Content-Daten
+- Event-Bus / Commands / Observer-Struktur
+- feste Simulations-Tickrate
