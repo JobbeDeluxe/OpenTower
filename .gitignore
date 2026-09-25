@@ -1,0 +1,41 @@
+# Godot 4+
+.godot/
+.import/
+
+# Exported builds
+/build/
+dist/
+exports/
+
+# Mono / C#
+.mono/
+data_*/
+
+# IDE
+.vscode/
+.idea/
+*.sln
+*.csproj
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Logs / temp
+*.log
+*.tmp
+*.bak
+
+# Local research / original game files
+original/
+research/original/
+simtower/
+SimTower/
+*.iso
+*.img
+
+# Local secrets/config
+.env
+.env.*
+!.env.example
