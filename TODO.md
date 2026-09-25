@@ -1,35 +1,57 @@
 # OpenTower – TODO / Roadmap
 
-Diese Liste ist bewusst nach Entwicklungsphasen sortiert. Ziel ist zuerst ein funktionierender Kern, nicht maximale Feature-Tiefe.
+Diese Liste ist nach Entwicklungsphasen sortiert. Ziel ist zuerst ein funktionierender Kern.
 
 ## Phase 0 – Projektbasis
 
 - [x] Repository anlegen
 - [x] README erstellen
-- [ ] Godot-4-Projekt initialisieren
-- [ ] `.gitignore` für Godot anlegen
+- [x] `.gitignore` anlegen
+- [x] technische Architektur dokumentieren
+- [x] rechtliche Leitlinien dokumentieren
+- [x] Architekturentscheidung: Godot 4 + C#/.NET Simulation Core
+- [ ] Godot 4 **.NET** Projekt initialisieren
+- [ ] C# Solution / Projekte anlegen
+- [ ] `OpenTower.Core` als Godot-unabhängige Class Library anlegen
+- [ ] `OpenTower.Godot` Integration anlegen
+- [ ] `OpenTower.Core.Tests` anlegen
 - [ ] Basisordner erstellen
-- [ ] technische Architektur dokumentieren
-- [ ] rechtliche Leitlinien dokumentieren
 - [ ] Namens- und Lizenzentscheidung später treffen
 
 ## Phase 1 – Minimaler spielbarer Prototyp
 
+### C# Simulation Core
+- [ ] Simulationsuhr / Tick-System
+- [ ] Gebäuderaster als Datenmodell
+- [ ] Etagen und belegte Zellen
+- [ ] Raum-Basismodell
+- [ ] Agent-Basismodell
+- [ ] Zustandsmaschine für Agenten
+- [ ] Aufzug-Basismodell
+- [ ] Warteschlangen
+- [ ] einfache Wirtschaft / Kontostand
+
+### Godot Darstellung / UI
 - [ ] leere Baufläche darstellen
-- [ ] Gebäuderaster definieren
+- [ ] Gebäuderaster visualisieren
 - [ ] Etagen platzierbar machen
 - [ ] Lobby platzierbar machen
 - [ ] Büro platzierbar machen
 - [ ] einfachen Aufzug platzierbar machen
+- [ ] sichtbare Agenten darstellen
+- [ ] Geldanzeige
+- [ ] Spielzeit pausieren / fortsetzen
+- [ ] Debug-Anzeige für Agenten und Wege
+
+### Erster kompletter Gameplay-Loop
 - [ ] Personen erzeugen
 - [ ] Personen zu Lobby und Aufzug laufen lassen
 - [ ] Warteschlange am Aufzug
 - [ ] Aufzug fährt Personen auf Zielstockwerk
 - [ ] Personen erreichen Büro
 - [ ] Büro erzeugt Einnahmen
-- [ ] einfache Geldanzeige
-- [ ] Spielzeit pausieren / fortsetzen
-- [ ] Debug-Anzeige für Agenten und Wege
+- [ ] Core läuft unabhängig von der Framerate
+- [ ] Core kann ohne Godot-Oberfläche getestet werden
 
 ## Phase 2 – Solide Simulation
 
@@ -48,6 +70,8 @@ Diese Liste ist bewusst nach Entwicklungsphasen sortiert. Ziel ist zuerst ein fu
 - [ ] Aufzugsgruppen
 - [ ] Kapazitätsgrenzen
 - [ ] Wartezeiten auswerten
+- [ ] Performance-Test mit 1.000+ Agenten
+- [ ] Performance-Test mit 5.000+ Agenten
 
 ## Phase 3 – Gebäudemanagement
 
@@ -84,6 +108,7 @@ Diese Liste ist bewusst nach Entwicklungsphasen sortiert. Ziel ist zuerst ein fu
 - [ ] Simulationsgeschwindigkeit
 - [ ] Profiler für Agentenzahlen
 - [ ] Balancing-Daten extern halten
+- [ ] Headless-Core-Tests
 
 ## Phase 6 – Recherche SimTower
 
