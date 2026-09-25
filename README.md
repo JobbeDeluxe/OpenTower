@@ -8,7 +8,7 @@ Ziel ist **kein 1:1-Klon mit übernommenen Originaldateien**, sondern eine moder
 
 **Phase 0 – Projektaufbau**
 
-Aktuell entsteht die technische Grundlage. Der erste spielbare Prototyp soll einen sehr kleinen, aber vollständigen Gameplay-Loop abbilden:
+Der erste spielbare Prototyp soll einen kleinen, vollständigen Gameplay-Loop abbilden:
 
 1. Grundstück / Baufläche anzeigen
 2. Etage bauen
@@ -20,18 +20,37 @@ Aktuell entsteht die technische Grundlage. Der erste spielbare Prototyp soll ein
 8. Besucher fahren zum Ziel
 9. Büro erzeugt Einnahmen
 
-Wenn dieser Loop funktioniert, wird die Simulation schrittweise erweitert.
+## Tech-Stack
 
-## Geplanter Tech-Stack
+OpenTower wird bewusst als **Hybrid aus Godot 4 und C#/.NET** aufgebaut.
 
-- **Engine:** Godot 4.x
-- **Sprache:** GDScript
+- **Engine / Rendering / UI:** Godot 4.x .NET
+- **Simulation Core:** C# / .NET
 - **Plattform zuerst:** Windows
 - **Repository:** GitHub
-- **Grafik:** eigene Pixel-/2D-Assets
-- **Simulation:** datengetrieben, möglichst unabhängig von Darstellung und UI
+- **Grafik:** eigene 2D-/Pixel-Assets
+- **Simulation:** datengetrieben und möglichst unabhängig von Rendering und UI
 
-Die Engine-Entscheidung ist für den Start gesetzt, kann bei guten technischen Gründen später geändert werden.
+Godot übernimmt Rendering, Szenen, Eingabe, UI, Audio und Tooling. Die eigentliche Spielsimulation wird als möglichst eigenständiger C#-Kern entwickelt.
+
+## Architekturprinzip
+
+```text
+                OpenTower
+                    |
+       +------------+------------+
+       |                         |
+     Godot                  C# Simulation Core
+       |                         |
+ Rendering                    Agenten
+ UI                           Aufzüge
+ Kamera                       Wirtschaft
+ Input                        Tageszeit
+ Audio                        Wegfindung
+ Animation                    Gebäudemodell
+```
+
+Eine simulierte Person muss nicht automatisch ein vollständiger Godot-Node sein. Der C#-Core kann tausende Agenten als reine Datenobjekte verwalten, während Godot nur die sichtbaren oder relevanten Agenten rendert.
 
 ## Kernsysteme
 
@@ -57,20 +76,24 @@ Geplant:
 
 ```text
 /
-├─ assets/             Eigene Grafiken, Audio und Fonts
-├─ data/               Daten für Räume, Preise, Balancing usw.
-├─ scenes/             Godot-Szenen
-├─ scripts/
-│  ├─ building/        Gebäude, Etagen, Räume
-│  ├─ simulation/      Zeit, Wirtschaft, globale Simulation
-│  ├─ agents/          Personen und Verhalten
-│  ├─ transport/       Aufzüge, Treppen, Wegfindung
-│  └─ ui/              Benutzeroberfläche
-├─ docs/               Architektur, Forschung, rechtliche Hinweise
-└─ tests/              Tests für Simulationslogik
+├─ OpenTower.sln
+├─ project.godot
+├─ assets/
+├─ data/
+├─ scenes/
+├─ src/
+│  ├─ OpenTower.Core/
+│  │  ├─ Agents/
+│  │  ├─ Building/
+│  │  ├─ Economy/
+│  │  ├─ Simulation/
+│  │  └─ Transport/
+│  └─ OpenTower.Godot/
+├─ ui/
+├─ docs/
+└─ tests/
+   └─ OpenTower.Core.Tests/
 ```
-
-Die Ordner werden angelegt, sobald dort die ersten Dateien benötigt werden.
 
 ## Roadmap
 
@@ -78,7 +101,7 @@ Die aktuelle Aufgabenliste steht in [TODO.md](TODO.md).
 
 Technische Grundentscheidungen stehen in [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
 
-Hinweise zur Abgrenzung gegenüber SimTower und anderen älteren Spielen stehen in [docs/LEGAL.md](docs/LEGAL.md).
+Hinweise zur Abgrenzung gegenüber SimTower stehen in [docs/LEGAL.md](docs/LEGAL.md).
 
 ## Umgang mit SimTower
 
@@ -94,15 +117,13 @@ In diesem Repository sollen insbesondere **nicht** eingecheckt werden:
 - ROM-/Disk-/Installationsabbilder
 - sonstige urheberrechtlich geschützte Originalressourcen
 
-Spielmechaniken können untersucht und anschließend eigenständig implementiert werden.
-
 ## Name
 
 **OpenTower** ist derzeit ein Arbeitstitel.
 
 ## Lizenz
 
-Derzeit wurde bewusst **keine Open-Source-Lizenz** vergeben. Bis wir uns dafür entscheiden, gelten die normalen urheberrechtlichen Regeln für den hier entwickelten Code und die Assets.
+Derzeit wurde bewusst **keine Open-Source-Lizenz** vergeben.
 
 ---
 
