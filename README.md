@@ -103,6 +103,22 @@ Technische Grundentscheidungen stehen in [docs/ARCHITECTURE.md](docs/ARCHITECTUR
 
 Hinweise zur Abgrenzung gegenüber SimTower stehen in [docs/LEGAL.md](docs/LEGAL.md).
 
+Bereits existierende SimTower-Nachbauten, Dateiformat-Dokumentation und unsere Regeln für deren Nutzung stehen in [docs/REFERENCE_PROJECTS.md](docs/REFERENCE_PROJECTS.md).
+
+## Recherche und Kompatibilität
+
+Für die Recherche werden unter anderem OpenSkyscraper, ConciliaTower, das YootTower-Projekt von Don Hopkins und vorhandene TDT-Dokumentation berücksichtigt.
+
+Unser Ansatz bleibt dabei:
+
+- C#-Simulationskern selbst entwickeln
+- vorhandene Projekte primär als Verhaltens- und Format-Referenz verwenden
+- keine fremden Quelltexte ungeprüft übernehmen
+- keine originalen SimTower-Dateien ins Repository oder in Releases aufnehmen
+- optional später einen isolierten Import-/Kompatibilitätslayer für Dateien entwickeln, die der Nutzer selbst lokal besitzt
+
+Damit können wir vorhandene Forschungsarbeit nutzen, ohne den OpenTower-Core unnötig an eine fremde Lizenz oder an Original-Assets zu koppeln.
+
 ## Umgang mit SimTower
 
 SimTower dient ausschließlich als **Referenz für Spielmechaniken und Forschungszwecke**.
