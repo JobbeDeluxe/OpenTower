@@ -18,6 +18,8 @@ Potential release path:
 
 No Steam dependency is required for the core game during early development.
 
+OpenTower must also be fully standalone from SimTower: commercial builds should contain only OpenTower-owned code and assets and must not require a user's original `SIMTOWER.EXE`, graphics or sounds.
+
 ## Base game principle
 
 The base game should already feel complete and worthwhile on its own.
