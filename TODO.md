@@ -9,6 +9,7 @@ Diese Liste ist nach Entwicklungsphasen sortiert. Ziel ist zuerst ein funktionie
 - [x] `.gitignore` anlegen
 - [x] technische Architektur dokumentieren
 - [x] rechtliche Leitlinien dokumentieren
+- [x] relevante SimTower-Nachbauten und Forschungsquellen dokumentieren
 - [x] Architekturentscheidung: Godot 4 + C#/.NET Simulation Core
 - [ ] Godot 4 **.NET** Projekt initialisieren
 - [ ] C# Solution / Projekte anlegen
@@ -109,11 +110,18 @@ Diese Liste ist nach Entwicklungsphasen sortiert. Ziel ist zuerst ein funktionie
 - [ ] Profiler für Agentenzahlen
 - [ ] Balancing-Daten extern halten
 - [ ] Headless-Core-Tests
+- [ ] optionalen Legacy-Import als getrenntes Modul entwerfen
+- [ ] TWR/TDT-Import prüfen
+- [ ] Versionserkennung für lokale SIMTOWER.EXE prüfen
 
 ## Phase 6 – Recherche SimTower
 
-Nur Beobachtung und Dokumentation, keine Übernahme geschützter Inhalte.
+Nur Beobachtung und Dokumentation, keine ungeprüfte Übernahme geschützter Inhalte oder fremder Quelltexte.
 
+- [ ] OpenSkyscraper Architektur und Ressourcen-Lader untersuchen
+- [ ] ConciliaTower Mechanik-/Format-Dokumentation untersuchen
+- [ ] YootTower Code Map auswerten
+- [ ] tower-docs TDT-Spezifikation auswerten
 - [ ] Raumtypen erfassen
 - [ ] Progressionslogik untersuchen
 - [ ] Aufzugsverhalten dokumentieren
@@ -121,8 +129,9 @@ Nur Beobachtung und Dokumentation, keine Übernahme geschützter Inhalte.
 - [ ] Tagesabläufe dokumentieren
 - [ ] Wirtschaftswerte grob vergleichen
 - [ ] UI-Konzepte analysieren
-- [ ] technische Dateistruktur nur soweit nötig untersuchen
+- [ ] NE-Ressourcenformat der eigenen Originaldateien untersuchen
 - [ ] eigene Designentscheidungen daraus ableiten
+- [ ] YootTower-Repository später erneut auf veröffentlichte Originalquellen + Lizenz prüfen
 
 ## Später / Ideen
 
