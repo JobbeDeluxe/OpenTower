@@ -98,7 +98,7 @@ This can help us build independent savegame import/export support without starti
 
 ## Original SimTower data owned by developers/users
 
-OpenTower may eventually support an **optional compatibility/import layer** that reads data from a user's own local SimTower installation.
+OpenTower will use locally owned SimTower data as **development research material only**. The shipping game should not depend on or import original graphics, sounds or other copyrighted game assets.
 
 Potential research targets:
 
@@ -113,16 +113,17 @@ Important separation:
 ```text
 OpenTower release
 ├─ OpenTower code
-├─ OpenTower-owned assets
-└─ optional importer/compatibility code
+├─ OpenTower-owned graphics
+├─ OpenTower-owned audio
+└─ OpenTower-owned data
 
-User machine
+Local development research
 └─ SIMTOWER.EXE / original installation
 ```
 
-Original SimTower files must not be committed to this repository or bundled into OpenTower releases.
+Original SimTower files must not be committed to this repository, bundled into OpenTower releases, or required to run the game.
 
-For a future public release, the legal implications of runtime extraction/use of original art and sound should be reviewed separately. Owning a copy of the game does not automatically grant redistribution rights to its assets.
+Owning a copy of the original game is useful for local research, but does not make its graphics, sound or other copyrighted assets part of OpenTower.
 
 ## Current engineering strategy
 
@@ -131,9 +132,10 @@ For OpenTower the preferred approach is:
 1. Build the C# simulation core independently.
 2. Use SimTower itself and existing reimplementations to verify behavior.
 3. Use documented file formats where useful.
-4. Initially ship only original OpenTower assets.
-5. Keep an optional legacy importer/compatibility module isolated from the core.
-6. Avoid copying source code from projects whose license would unintentionally constrain OpenTower.
-7. Revisit the YootTower source project if/when the historical source is formally published under a suitable license.
+4. Ship only original OpenTower graphics, audio, text and other assets.
+5. Keep any original-file analysis tooling internal and separate from the game.
+6. Do not build player-facing dependence on `SIMTOWER.EXE` or extracted original media.
+7. Avoid copying source code from projects whose license would unintentionally constrain OpenTower.
+8. Revisit the YootTower source project if/when the historical source is formally published under a suitable license.
 
 This preserves flexibility while still taking advantage of decades of existing research.
