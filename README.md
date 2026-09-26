@@ -52,6 +52,18 @@ Godot übernimmt Rendering, Szenen, Eingabe, UI, Audio und Tooling. Die eigentli
 
 Eine simulierte Person muss nicht automatisch ein vollständiger Godot-Node sein. Der C#-Core kann tausende Agenten als reine Datenobjekte verwalten, während Godot nur die sichtbaren oder relevanten Agenten rendert.
 
+## Produktziel
+
+OpenTower wird zunächst als Hobbyprojekt entwickelt, soll aber technisch und rechtlich so aufgebaut sein, dass später auch ein **kommerzieller Steam-Release** möglich bleibt.
+
+Der Kern soll ohne Steam-Abhängigkeit funktionieren. Plattformfunktionen wie Achievements, Cloud Saves oder DLC-Besitz werden später über eine getrennte Integrationsschicht angebunden.
+
+Mögliche Erweiterungen sollen als optionale Simulationsmodule funktionieren. Eine erste Idee ist ein umfangreiches **Utilities-DLC** mit Strom, Wasser, Notstrom, Transformatoren, Pumpen, Batteriespeichern, Ausfällen und detailliertem Verbrauch.
+
+Wichtig: Das Basisspiel soll für sich vollständig funktionieren. Erweiterungen sollen zusätzliche Simulationstiefe bringen und keine grundlegenden Kernfunktionen aus dem Hauptspiel herauslösen.
+
+Weitere Details: [docs/PRODUCT_VISION.md](docs/PRODUCT_VISION.md).
+
 ## Kernsysteme
 
 OpenTower soll langfristig unter anderem folgende Systeme enthalten:
@@ -104,6 +116,8 @@ Technische Grundentscheidungen stehen in [docs/ARCHITECTURE.md](docs/ARCHITECTUR
 Hinweise zur Abgrenzung gegenüber SimTower stehen in [docs/LEGAL.md](docs/LEGAL.md).
 
 Bereits existierende SimTower-Nachbauten, Dateiformat-Dokumentation und unsere Regeln für deren Nutzung stehen in [docs/REFERENCE_PROJECTS.md](docs/REFERENCE_PROJECTS.md).
+
+Langfristige Produkt-, Steam- und Erweiterungsstrategie: [docs/PRODUCT_VISION.md](docs/PRODUCT_VISION.md).
 
 ## Recherche und Kompatibilität
 
