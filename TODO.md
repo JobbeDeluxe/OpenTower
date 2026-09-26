@@ -112,9 +112,10 @@ Diese Liste ist nach Entwicklungsphasen sortiert. Ziel ist zuerst ein funktionie
 - [ ] Profiler für Agentenzahlen
 - [ ] Balancing-Daten extern halten
 - [ ] Headless-Core-Tests
-- [ ] optionalen Legacy-Import als getrenntes Modul entwerfen
-- [ ] TWR/TDT-Import prüfen
-- [ ] Versionserkennung für lokale SIMTOWER.EXE prüfen
+- [ ] internes Research-Tooling für lokale Originaldaten entwerfen
+- [ ] TWR/TDT-Formate nur für Forschung und Vergleich prüfen
+- [ ] Versionserkennung lokaler SIMTOWER.EXE für Analysezwecke prüfen
+- [ ] sicherstellen, dass Release-Builds keinerlei Originaldateien voraussetzen
 
 ## Phase 6 – Recherche SimTower
 
@@ -131,7 +132,9 @@ Nur Beobachtung und Dokumentation, keine ungeprüfte Übernahme geschützter Inh
 - [ ] Tagesabläufe dokumentieren
 - [ ] Wirtschaftswerte grob vergleichen
 - [ ] UI-Konzepte analysieren
+- [ ] vorhandene Originaldateien lokal inventarisieren und Version bestimmen
 - [ ] NE-Ressourcenformat der eigenen Originaldateien untersuchen
+- [ ] Originalgrafik/-sound nur analysieren, nicht in OpenTower integrieren
 - [ ] eigene Designentscheidungen daraus ableiten
 - [ ] YootTower-Repository später erneut auf veröffentlichte Originalquellen + Lizenz prüfen
 
