@@ -129,13 +129,15 @@ Unser Ansatz bleibt dabei:
 - vorhandene Projekte primär als Verhaltens- und Format-Referenz verwenden
 - keine fremden Quelltexte ungeprüft übernehmen
 - keine originalen SimTower-Dateien ins Repository oder in Releases aufnehmen
-- optional später einen isolierten Import-/Kompatibilitätslayer für Dateien entwickeln, die der Nutzer selbst lokal besitzt
+- Originaldaten ausschließlich lokal für Forschung, Vergleich und Rekonstruktion von Verhalten verwenden
+- OpenTower selbst bleibt vollständig unabhängig von `SIMTOWER.EXE` und anderen Originaldateien
+- veröffentlichte Builds verwenden ausschließlich eigene Grafiken, Sounds, Texte und sonstige Assets
 
 Damit können wir vorhandene Forschungsarbeit nutzen, ohne den OpenTower-Core unnötig an eine fremde Lizenz oder an Original-Assets zu koppeln.
 
 ## Umgang mit SimTower
 
-SimTower dient ausschließlich als **Referenz für Spielmechaniken und Forschungszwecke**.
+SimTower dient ausschließlich als **lokale Referenz für Spielmechaniken und Forschungszwecke**. OpenTower soll weder zur Laufzeit noch bei der Installation Originaldateien benötigen.
 
 In diesem Repository sollen insbesondere **nicht** eingecheckt werden:
 
