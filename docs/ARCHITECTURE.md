@@ -255,6 +255,52 @@ Der getrennte C#-Core bringt:
 - einfachere Headless-Simulation
 - später leichter austauschbare Darstellung
 
+
+## Modulare Features und zukünftige DLC-Systeme
+
+Die Architektur soll optionale Simulationssysteme ermöglichen, ohne dass der Core direkt von Steam oder einer bestimmten Vertriebsplattform abhängt.
+
+Konzeptionell:
+
+```text
+Simulation
+├─ AgentSystem
+├─ EconomySystem
+├─ ElevatorSystem
+├─ BuildingSystem
+│
+├─ ElectricitySystem      optional
+├─ WaterSystem            optional
+├─ EmergencySystem        optional
+└─ weitere Feature-Systeme
+```
+
+Dabei gelten folgende Regeln:
+
+- optionale Systeme werden über eine Feature-Konfiguration aktiviert
+- `OpenTower.Core` kennt keine Steam-DLC-IDs
+- Plattform-/Besitzprüfung liegt außerhalb des Core
+- Savegames speichern benötigte Feature-Informationen versioniert
+- Tests können optionale Systeme unabhängig von Steam aktivieren
+- das Basisspiel bleibt auch ohne optionale Module vollständig lauffähig
+
+Beispiel:
+
+```text
+Steam / andere Plattform
+        |
+        v
+Platform / Entitlement Layer
+        |
+        v
+Feature Configuration
+        |
+        v
+OpenTower.Core
+```
+
+So bleiben spätere DLCs, Nicht-Steam-Builds, Entwicklungs-Builds und eventuell Mods technisch sauber voneinander getrennt.
+
 ## Noch offene Entscheidungen
 
 - genaue Rastergröße
