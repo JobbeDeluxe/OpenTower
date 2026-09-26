@@ -100,7 +100,7 @@ Vermeiden:
 
 ## Originaldateien auf Entwicklerrechnern
 
-Eigene lokal vorhandene Originaldateien können für Forschung und Kompatibilitätstests getrennt vom Repository gehalten werden.
+Eigene lokal vorhandene Originaldateien können ausschließlich für Forschung, Vergleich, Messung und Rekonstruktion von Spielverhalten getrennt vom Repository gehalten werden.
 
 Regeln:
 
@@ -108,11 +108,13 @@ Regeln:
 - nicht in Releases aufnehmen
 - Pfade in `.gitignore` berücksichtigen
 - Originaldateien nicht als Test-Fixtures veröffentlichen
-- Tools möglichst so bauen, dass der Nutzer seine eigenen lokalen Dateien auswählen muss
+- Research-Tools niemals als Voraussetzung für das eigentliche Spiel behandeln
+- keine Originalgrafiken, Originalsounds oder sonstigen extrahierten Medien in OpenTower integrieren
+- keine Spielerfunktion vorsehen, die `SIMTOWER.EXE` zum Betrieb von OpenTower benötigt
 
-Eine mögliche spätere Architektur ist ein optionaler Legacy-Importer, der eine vom Nutzer bereitgestellte `SIMTOWER.EXE` oder `.TWR`/`.TDT`-Datei liest.
+**Produktregel:** OpenTower muss mit ausschließlich eigenen Assets vollständig funktionieren. Originalgrafiken und Originalsounds bleiben beim Originalspiel und dienen höchstens als lokale Referenz während der Entwicklung.
 
-Das bedeutet jedoch nicht automatisch, dass Originalgrafiken oder Sounds in einem öffentlichen OpenTower-Release genutzt oder weiterverteilt werden dürfen. Die rechtliche Bewertung eines solchen optionalen Runtime-Imports wird vor einer Veröffentlichung separat geprüft.
+Interne Research-Tools dürfen lokale Originaldateien untersuchen, sollen aber klar vom eigentlichen Spielcode getrennt bleiben und nicht Bestandteil regulärer Releases sein.
 
 ## Projektname und Marken
 
