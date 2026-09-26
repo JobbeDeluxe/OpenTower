@@ -10,6 +10,7 @@ Diese Liste ist nach Entwicklungsphasen sortiert. Ziel ist zuerst ein funktionie
 - [x] technische Architektur dokumentieren
 - [x] rechtliche Leitlinien dokumentieren
 - [x] relevante SimTower-Nachbauten und Forschungsquellen dokumentieren
+- [x] langfristige Steam-/Produkt-/DLC-Strategie dokumentieren
 - [x] Architekturentscheidung: Godot 4 + C#/.NET Simulation Core
 - [ ] Godot 4 **.NET** Projekt initialisieren
 - [ ] C# Solution / Projekte anlegen
@@ -31,6 +32,7 @@ Diese Liste ist nach Entwicklungsphasen sortiert. Ziel ist zuerst ein funktionie
 - [ ] Aufzug-Basismodell
 - [ ] Warteschlangen
 - [ ] einfache Wirtschaft / Kontostand
+- [ ] Feature-/Module-Konfiguration so vorsehen, dass optionale Systeme später aktivierbar sind
 
 ### Godot Darstellung / UI
 - [ ] leere Baufläche darstellen
@@ -84,7 +86,7 @@ Diese Liste ist nach Entwicklungsphasen sortiert. Ziel ist zuerst ein funktionie
 - [ ] Treppen / Rolltreppen
 - [ ] Reinigung
 - [ ] Wartung
-- [ ] Strom / Betriebskosten
+- [ ] grundlegende Betriebskosten
 - [ ] Raum-Upgrades
 - [ ] Abrisswerkzeug
 - [ ] Baukosten und Rückerstattungen
@@ -133,16 +135,50 @@ Nur Beobachtung und Dokumentation, keine ungeprüfte Übernahme geschützter Inh
 - [ ] eigene Designentscheidungen daraus ableiten
 - [ ] YootTower-Repository später erneut auf veröffentlichte Originalquellen + Lizenz prüfen
 
+## Kommerzielle Veröffentlichung / Steam
+
+- [ ] Release-Strategie festlegen
+- [ ] Steamworks-Integration als getrennte Plattform-Schicht planen
+- [ ] Achievements prüfen
+- [ ] Steam Cloud für Savegames prüfen
+- [ ] Steam Deck/Linux prüfen
+- [ ] Demo/Playtest-Konzept prüfen
+- [ ] Early-Access-Entscheidung später treffen
+- [ ] Preisstrategie später festlegen
+- [ ] Marken-/Namensprüfung vor öffentlicher Vermarktung
+
+## Erweiterungen / DLC – Architektur
+
+- [ ] optionale Feature-Module unterstützen
+- [ ] Plattform-/DLC-Besitz nicht in `OpenTower.Core` koppeln
+- [ ] Feature-Konfiguration für Tests und Nicht-Steam-Builds
+- [ ] Savegames müssen fehlende optionale Module robust behandeln
+- [ ] Modding und DLC technisch voneinander trennen
+
+### Idee: Utilities Expansion
+- [ ] detailliertes Stromsystem
+- [ ] Verbrauch pro Raum
+- [ ] Transformatoren / Unterverteilungen
+- [ ] Generatoren / Notstrom
+- [ ] Batteriespeicher
+- [ ] Solaranlagen
+- [ ] Stromausfälle / Lastspitzen
+- [ ] Wasserverbrauch
+- [ ] Pumpen / Druck
+- [ ] Speicherbehälter
+- [ ] Abwasser
+- [ ] Infrastrukturwartung
+
 ## Später / Ideen
 
 - [ ] Szenario-Modus
 - [ ] Sandbox-Modus
 - [ ] Mods
-- [ ] Steam-Deck/Linux
 - [ ] Controller-Unterstützung
 - [ ] eigene Karten / Grundstücke
 - [ ] modifizierbare Datendateien
 - [ ] Statistiken und Heatmaps
 - [ ] detaillierte Aufzugsteuerung
 - [ ] Brand- und Evakuierungssysteme
+- [ ] weitere mögliche Expansion-Themen prüfen
 - [ ] Multiplayer nur prüfen, nicht priorisieren
